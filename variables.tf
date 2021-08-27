@@ -1,8 +1,8 @@
-variable "token" {
+variable "spot_token" {
   type = string
   default = ""
 }
-variable "account" {
+variable "spot_account" {
   type = string
   default = ""
 }
@@ -274,7 +274,7 @@ variable "scheduled_task" {
 variable "load_balancer_name" {
   type        = string
   description = "Name of LB"
-  default     = "Terraform"
+  default     = ""
 }
 variable "arn" {
   type        = string

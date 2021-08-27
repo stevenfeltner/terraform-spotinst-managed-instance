@@ -7,8 +7,8 @@ terraform {
   }
 }
 provider "spotinst" {
-  token = var.token
-  account = var.account
+  token = var.spot_token
+  account = var.spot_account
 }
 # Create a Managed Instance
 resource "spotinst_managed_instance_aws" "managed-instance" {
@@ -77,14 +77,14 @@ resource "spotinst_managed_instance_aws" "managed-instance" {
     should_tag_amis           = var.should_tag_amis
   }
 
-  dynamic network_interface {
-    for_each = var.network_interface == null ? [] : var.network_interface
-    content {
-      device_index = network_interface.value["device_index"]
-      associate_public_ip_address = network_interface.value["associate_public_ip_address"]
-      associate_ipv6_address = network_interface.value["associate_ipv6_address"]
-    }
-  }
+//  dynamic network_interface {
+//    for_each = var.network_interface == null ? [] : var.network_interface
+//    content {
+//      device_index = network_interface.value["device_index"]
+//      associate_public_ip_address = network_interface.value["associate_public_ip_address"]
+//      associate_ipv6_address = network_interface.value["associate_ipv6_address"]
+//    }
+//  }
 
   dynamic scheduled_task {
     for_each = var.scheduled_task == null ? [] : var.scheduled_task
@@ -97,31 +97,31 @@ resource "spotinst_managed_instance_aws" "managed-instance" {
     }
   }
 
-  load_balancers {
-    name                = var.load_balancer_name
-    arn                 = var.arn
-    type                = var.type
-    balancer_id         = var.balancer_id
-    target_set_id       = var.target_set_id
-    auto_weight         = var.auto_weight
-    az_awareness        = var.az_awareness
-  }
-
-  integration_route53 {
-    domains {
-      hosted_zone_id = var.hosted_zone_id
-      spotinst_acct_id = var.spotinst_acct_id
-      record_set_type = var.record_set_type
-      dynamic record_sets {
-        for_each = var.record_sets == null ? [] : var.record_sets
-        content {
-          name = record_sets.value["name"]
-          use_public_ip = record_sets.value["use_public_ip"]
-          use_public_dns = record_sets.value["use_public_dns"]
-        }
-      }
-    }
-  }
+//  load_balancers {
+//    name                = var.load_balancer_name
+//    arn                 = var.arn
+//    type                = var.type
+//    balancer_id         = var.balancer_id
+//    target_set_id       = var.target_set_id
+//    auto_weight         = var.auto_weight
+//    az_awareness        = var.az_awareness
+//  }
+//
+//  integration_route53 {
+//    domains {
+//      hosted_zone_id = var.hosted_zone_id
+//      spotinst_acct_id = var.spotinst_acct_id
+//      record_set_type = var.record_set_type
+//      dynamic record_sets {
+//        for_each = var.record_sets == null ? [] : var.record_sets
+//        content {
+//          name = record_sets.value["name"]
+//          use_public_ip = record_sets.value["use_public_ip"]
+//          use_public_dns = record_sets.value["use_public_dns"]
+//        }
+//      }
+//    }
+//  }
 
   managed_instance_action {
     type                = var.managed_instance_action
